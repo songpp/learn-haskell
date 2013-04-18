@@ -1,11 +1,9 @@
 {-#LANGUAGE GADTs #-}
 module BinaryHeapTree where
 
-
 data Tree a where
   Nil  :: ( Ord a) => Tree a
   Node :: ( Ord a) => a -> Tree a -> Tree a -> Tree a
-
 
 
 -- O(1)
