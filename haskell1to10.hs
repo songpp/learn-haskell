@@ -27,7 +27,7 @@ elemAt (x:xs) n
 -- 4
 myLength :: [a] -> Int
 myLength = len 0
-	where 
+	where
 		len :: Int -> [a] -> Int
 		len n [] = n
 		len n (x:xs) = len (n+1) xs
@@ -36,7 +36,7 @@ myLength = len 0
 -- 5
 myReverse :: [a] -> [a]
 myReverse = rev []
-	where 
+	where
 		rev acc [] = acc
 		rev acc (x:xs) = rev (x:acc) xs
 
@@ -44,7 +44,7 @@ myReverse' = foldl (flip (:)) []
 
 
 
--- 6 
+-- 6
 isPalindrome xs = xs == reverse xs
 
 -- 7
@@ -53,7 +53,7 @@ data NestedList a = Elem a | List [NestedList a] deriving (Show,Eq)
 
 flatten :: NestedList a -> [a]
 flatten = doFlatten []
-	where 
+	where
 		doFlatten xs (Elem x)		= xs ++ [x]
 		doFlatten xs (List [])		= xs
 		doFlatten xs (List (x:ys)) 	= doFlatten (doFlatten xs x) (List ys)
@@ -64,7 +64,7 @@ flatten = doFlatten []
 compress :: Eq a => [a] -> [a]
 compress [] = []
 compress xs = compress' [(head xs)] (head xs) xs
-	where 
+	where
 		compress' :: Eq a => [a] -> a -> [a] -> [a]
 		compress' acc _ [] 		=  reverse acc
 		compress' acc c (x:xs)
@@ -73,7 +73,7 @@ compress xs = compress' [(head xs)] (head xs) xs
 
 compress2 :: Eq a => [a] -> [a]
 compress2 = comp2 []
-	where 
+	where
 		comp2 acc []		= reverse acc
 		comp2 acc [x]		= comp2 (x : acc) []
 		comp2 acc (x:xs)
@@ -90,12 +90,12 @@ pack = pack' [] []
 		pack' :: Eq a => [[a]] -> [a] -> [a] -> [[a]]
 		pack' acc acc' []  	= reverse acc
 		pack' acc acc' [x]	= pack' ((x:acc'):acc) [] []
-		pack' acc acc' (x:ys) 
+		pack' acc acc' (x:ys)
 			| x == head ys	= pack' acc (x:acc') ys
 			| otherwise		= pack' ((x:acc'):acc) [] ys
 
 
--- 10 
+-- 10
 -- run-length
 
 encode :: Eq a => [a] -> [(Int, a)]

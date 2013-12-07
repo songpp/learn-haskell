@@ -1,6 +1,6 @@
 
 
-import System.Random
+import           System.Random
 
 -- 21
 -- Insert an element at a given position into a list.
@@ -8,7 +8,7 @@ import System.Random
 insertAt :: a -> [a] -> Int -> [a]
 
 insertAt a xs n = insert' [] 0 xs
-	where 
+	where
 		insert' acc idx [] = acc ++ [a]
 		insert' acc idx	t@(x:xs)
 			| idx == n = acc ++ (a:t)
@@ -17,16 +17,16 @@ insertAt a xs n = insert' [] 0 xs
 
 insertAt2 a xs n = l ++ (a : r)
 	where
-		(l,r) = splitAt n xs 
+		(l,r) = splitAt n xs
 
 
 -- 22
 -- Create a list containing all integers within a given range.
 
--- range start end 
+-- range start end
 range :: Int -> Int -> [Int]
 range i n = range' [] i
-	where 
+	where
 		range' acc i
 			| i >  n = reverse acc
 			| i <= n = range' (i:acc) (i+1)
