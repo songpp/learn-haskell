@@ -8,16 +8,16 @@ import           System.Random
 insertAt :: a -> [a] -> Int -> [a]
 
 insertAt a xs n = insert' [] 0 xs
-	where
-		insert' acc idx [] = acc ++ [a]
-		insert' acc idx	t@(x:xs)
-			| idx == n = acc ++ (a:t)
-			| idx <  n = insert' (acc ++ [x]) (idx+1) xs
+    where
+        insert' acc idx [] = acc ++ [a]
+        insert' acc idx    t@(x:xs)
+            | idx == n = acc ++ (a:t)
+            | idx <  n = insert' (acc ++ [x]) (idx+1) xs
 
 
 insertAt2 a xs n = l ++ (a : r)
-	where
-		(l,r) = splitAt n xs
+    where
+        (l,r) = splitAt n xs
 
 
 -- 22
@@ -26,10 +26,10 @@ insertAt2 a xs n = l ++ (a : r)
 -- range start end
 range :: Int -> Int -> [Int]
 range i n = range' [] i
-	where
-		range' acc i
-			| i >  n = reverse acc
-			| i <= n = range' (i:acc) (i+1)
+    where
+        range' acc i
+            | i >  n = reverse acc
+            | i <= n = range' (i:acc) (i+1)
 
 
 -- 23 random

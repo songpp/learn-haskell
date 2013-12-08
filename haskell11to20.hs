@@ -8,8 +8,8 @@ pack = pack' [] []
 		pack' acc acc' []  	= reverse acc
 		pack' acc acc' [x]	= pack' ((x:acc'):acc) [] []
 		pack' acc acc' (x:ys)
-			| x == head ys	= pack' acc (x:acc') ys
-			| otherwise		= pack' ((x:acc'):acc) [] ys
+			| x == head ys = pack' acc (x:acc') ys
+			| otherwise = pack' ((x:acc'):acc) [] ys
 
 data RunLength a = Single a | Multi Int a deriving Show
 
@@ -50,7 +50,7 @@ runlen (x:xs) = run' [] (1,x) xs
 		run' acc (n,v) [x]	= run' ((n+1, v): acc) (0,x) []
 		run' acc c@(n,v) (x:xs)
 			| v == x 		= run' acc (n+1, v) xs
-			| otherwise		= run' (c:acc) (1, x) xs
+			| otherwise = run' (c:acc) (1, x) xs
 
 		convert (n, x) = if n > 1
 							then Multi n x
@@ -67,7 +67,7 @@ dupli (x:xs) = [x,x] ++ dupli xs
 -- 15
 
 repli :: [a] -> Int -> [a]
-repli [] 	 _	= []
+repli [] 	 _= []
 repli (x:xs) n 	= (loop x n []) ++ repli xs n
 	where
 		loop x 0 acc = acc
@@ -84,8 +84,8 @@ dropEvery = dropEvery' 1 []
 	where
 		dropEvery' c acc [] 		n 	= reverse acc
 		dropEvery' c acc (x:xs) 	n
-			| c `rem` n == 0 	= dropEvery' (c+1) acc 	  xs n
-			| otherwise 		= dropEvery' (c+1) (x:acc) xs n
+			| c `rem` n == 0 = dropEvery' (c+1) acc 	  xs n
+			| otherwise      = dropEvery' (c+1) (x:acc) xs n
 
 
 -- 17
@@ -96,7 +96,7 @@ split :: [a] -> Int -> ([a], [a])
 split = split' []
 	where
 		split' xs [] n = (reverse xs, [])
-		split' xs  ys  0 =  (reverse xs, ys)
+		split' xs  ys  0 = (reverse xs, ys)
 		split' xs (x:ys) n = split' (x:xs) ys (n-1)
 
 
@@ -106,12 +106,12 @@ slice :: [a] -> Int -> Int -> [a]
 slice xs start end
 	| start < 0  	= error "start must be >= 0"
 	| start > end 	= error "start must be <= `end`"
-	| otherwise		= slice' xs [] 1
+	| otherwise= slice' xs [] 1
 	where
-		slice' [] 	  acc _ = reverse acc
+		slice' []     acc _ = reverse acc
 		slice' (x:xs) acc c
 			| c >= start && c <= end = slice' xs (x:acc) (c+1)
-			| otherwise				 = slice' xs acc (c+1)
+			| otherwise = slice' xs acc (c+1)
 
 
 -- 19
@@ -121,7 +121,7 @@ rotate :: [a] -> Int -> [a]
 rotate [] _ = []
 rotate xs 0 = xs
 rotate xs n
-	| n > 0	= snd positiveR ++ fst positiveR
+	| n > 0= snd positiveR ++ fst positiveR
 	| n < 0 = snd negtiveR ++ fst negtiveR
 	where
 		positiveR = split xs n
