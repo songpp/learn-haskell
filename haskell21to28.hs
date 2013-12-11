@@ -39,8 +39,8 @@ range i n = range' [] i
 -- 26
 combinations :: Int -> [a] -> [[a]]
 combinations 0 _ = [[]]
-combinations 1 xs = xs
 combinations _ [] = []
+combinations 1 xs = [xs]
 combinations n (x:xs) = (map (x:) (combinations (n-1) xs)) ++ (combinations n xs)
 
 
