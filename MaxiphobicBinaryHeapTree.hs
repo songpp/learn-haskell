@@ -77,7 +77,8 @@ size :: Tree a -> Int
 size Null = 0
 size (Fork n _ _ _) = n
 
--- O(?)
+-- N - (N-1)/3 = (2N-2)/3
+-- O(log1.5N)
 merge :: (Ord a) => Tree a -> Tree a -> Tree a
 merge Null t = t
 merge t Null = t
@@ -110,3 +111,45 @@ prettyPrint t = padding 0 ' ' t
         prefix n c
             | n > 0 = replicate n ' ' ++ (c:"|-")
             | otherwise = replicate n c
+
+
+
+-- exercise 1-2
+{--
+fromList [1..7]
+[1]
+    L|-[2]
+        L|-[5]
+        R|-[6]
+    R|-[3]
+        L|-[4]
+        R|-[7]
+
+
+fromList [1,7,2,6,3,5,4]
+[1]
+    L|-[3]
+        L|-[7]
+        R|-[5]
+    R|-[2]
+        L|-[6]
+        R|-[4]
+
+
+deleteMin it
+[2]
+    L|-[3]
+        L|-[4]
+        R|-[7]
+    R|-[5]
+        L|-[6]
+
+--}
+
+-- exercise 1-3
+-- | Explain why an unbalanced maxiphobic heap (in the extreme, a
+-- | completely linear heap) is preferable to a balanced one
+-- merge become faster maybe could be O(1)
+
+
+
