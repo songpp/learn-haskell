@@ -77,7 +77,7 @@ size :: Tree a -> Int
 size Null = 0
 size (Fork n _ _ _) = n
 
--- N - (N-1)/3 = (2N-2)/3
+-- (N - 1) - (N-1)/3 = (2N-2)/3
 -- O(log1.5N)
 merge :: (Ord a) => Tree a -> Tree a -> Tree a
 merge Null t = t

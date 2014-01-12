@@ -1,14 +1,15 @@
-
 {-# LANGUAGE LambdaCase #-}
 import           Data.Maybe
 import           Prelude    hiding (gcd)
 -- 31
 -- isPrime
 
-isPrime n = null allRems
+isPrime2 n = null allRems
     where
         allRems = [x | x <- [2 .. (n - 1)], n `rem` x == 0]
 
+isPrime :: Integral a => a -> Bool
+isPrime n = not $ any (\t -> n `rem` t == 0) [2 ..  floor . sqrt . fromIntegral $ n]
 
 -- 32
 -- GCD
@@ -33,7 +34,7 @@ phi n = length [x | x <- [1 .. (n - 1)], coprime n x]
 -- 35
 -- prime factors
 
-primes n = [x| x <- [2 .. n], isPrime x]
+primes n = [ x | x <- [2 .. n], isPrime x]
 
 primeFactors :: Integral a => a -> [(a, a)]
 primeFactors n = pf [] (primes n) n
@@ -83,7 +84,7 @@ goldbach n = first (isJust . snd) (loop primes) >>= \(a, Just b) -> return (a,b)
         primes = primesR 1 n
 
 
-goldbach2 n =  map (\(a, Just b) -> (a,b)) . filter (isJust . snd) $ (loop primes)
+goldbach2 n =  map (\(a, Just b) -> (a,b)) . filter (isJust . snd) $ loop primes
     where
         loop [x] = [(x, Nothing)]
         loop (x:xs) = (x, find x (reverse xs)) : loop xs
@@ -92,7 +93,7 @@ goldbach2 n =  map (\(a, Just b) -> (a,b)) . filter (isJust . snd) $ (loop prime
 
 
 -- 41
-evens i n = filter even $ [i..n]
+evens i n = filter even [i..n]
 
 data Goldbach =
     G Integer Integer Integer | G2 Integer [(Integer, Integer)]
@@ -107,7 +108,7 @@ goldbachList i n v = find (evens i n)
              . map (\x -> let Just (a,b) = goldbach x in G x a b)
 
 
-goldbachList2 i n v = filter (not . emptyG2) . map (find . generate) $ (evens i n)
+goldbachList2 i n v = filter (not . emptyG2) . map (find . generate) $ evens i n
     where
         emptyG2 (G2 x xs) = null xs
         find (G2 x xs) = G2 x (avaliablePairs xs)
