@@ -15,18 +15,18 @@ main = do
     let r = take 10 . sortBy sortA $ IntMap.elems result
     print r
 
-type Word = String
-data A = A { size:: Int, ws::[String] }
+type Words = [String]
+data A = A { size:: Int, ws::Words }
 instance Show A where
     show (A size words) = printf "%d => %s\n" size (show words)
 
 sortA a1 a2 =  size a2 `compare` size a1
 
-analyze :: [String] -> IntMap A
+analyze :: Words -> IntMap A
 analyze = foldl insert IntMap.empty . map wordHash
     where
         wordHash w = (,) (hashWords w) w
-        insert :: IntMap A -> (Int,String) -> IntMap A
+        insert :: IntMap A -> (Int, String) -> IntMap A
         insert acc (hash, word) = IntMap.insertWith increment hash (A 1 [word]) acc
         increment (A s1 w1) (A s2 w2) = A (s1 + s2) (w1 ++ w2)
 
