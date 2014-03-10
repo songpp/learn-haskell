@@ -8,15 +8,14 @@ import           System.Environment
 import           Text.Printf        (printf)
 
 main = do
-    args <- getArgs
-    let (filename : _) = args
+    (filename : _) <- getArgs
     contents <- readFile filename
-    let result = analyze . map (map toLower) . lines $ contents
+    let result = analyze . lines . map toLower  $ contents
     let r = take 10 . sortBy sortA $ IntMap.elems result
     print r
 
 type Words = [String]
-data A = A { size:: Int, ws::Words }
+data A = A { size :: !Int, ws :: Words }
 instance Show A where
     show (A size words) = printf "%d => %s\n" size (show words)
 
@@ -25,14 +24,14 @@ sortA a1 a2 =  size a2 `compare` size a1
 analyze :: Words -> IntMap A
 analyze = foldl insert IntMap.empty . map wordHash
     where
-        wordHash w = (,) (hashWords w) w
+        wordHash w = (hashWord w,  w)
         insert :: IntMap A -> (Int, String) -> IntMap A
         insert acc (hash, word) = IntMap.insertWith increment hash (A 1 [word]) acc
         increment (A s1 w1) (A s2 w2) = A (s1 + s2) (w1 ++ w2)
 
 
-hashWords :: String -> Int
-hashWords = product . map factors
+hashWord :: String -> Int
+hashWord = product . map factors
     where
         factors = (hashFactors IntMap.!) . ord
 
